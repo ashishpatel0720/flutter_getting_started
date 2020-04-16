@@ -21,6 +21,7 @@ class _FuelFormState extends State<FuelForm> {
   final _currencies = ["Dollar","Euro","Pound"];
   String _currency='Dollar'; // default value
 
+  TextEditingController textEditingController =TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -35,23 +36,26 @@ class _FuelFormState extends State<FuelForm> {
         child: Column(
           children: <Widget>[
             TextField(
+              controller: textEditingController,
               decoration: InputDecoration(
-                  labelText: 'Distance',
+                   labelText: 'Distance',
                   hintText:"eg. 12.4",
                   labelStyle: textStyle,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0)
                   )
-
               ),
               keyboardType: TextInputType.number, // only numbers will be shown in keyboard input
-              onChanged: (String str){
-                setState(() { // only setState() will be able to change state ( same as React)
-                  distance = str;
+            ),
+            RaisedButton(
+              onPressed: () {
+                setState(() {
+                  distance=textEditingController.text;
                 });
               },
+              child:Text("Submit")
             ),
-            Text("Distance: "+ distance+ ' KM'),
+            Text("Distance: "+ textEditingController.text + ' KM'),
 
 //            DropdownButton<String>(
 //              items: _currencies.map((String value ){
